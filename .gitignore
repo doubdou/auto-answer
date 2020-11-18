@@ -1,0 +1,9 @@
+/.git-credentials
+/.idea/
+/target/
+/logs/
+/logs/
+/target/
+.idea/
+*.iml
+*.log
