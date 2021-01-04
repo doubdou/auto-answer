@@ -31,9 +31,8 @@ public class HangupAction extends BaseAction {
 
     @Override
     public void executeAction() {
-        logger.info("挂断操作 延迟2s左右");
-        //标记禁止输入,避免在等待期间发生说话
+        logger.info("挂断操作");
         ChannelStatusManager.getChannelStatus(actionBean.getCallId()).setInputType(ChannelStatusTypeBean.FPRBID_INPUT);
-        WheelTimerUtils.submitTask(new HangupTask(proxy,actionBean.getCallId()),2000);
+        WheelTimerUtils.submitTask(new HangupTask(proxy,actionBean.getCallId()),0);
     }
 }

@@ -39,7 +39,7 @@ public class InComingEventMessage extends BaseEventMessage{
 
             logger.info("主叫-> {};被叫->{};callId->{}",caller,callee,callId);
             DialogManageRequest dialogManageRequest=new DialogManageRequest();
-            dialogManageRequest.setReqType(DialogRequestEnum.CC_DM_CHAT_CREATE);
+            dialogManageRequest.setReqType(DialogRequestEnum.AA_DM_CHAT_CREATE);
             dialogManageRequest.setCallee(callee);
             dialogManageRequest.setClientId(caller);
             dialogManageRequest.setChatId(callId);

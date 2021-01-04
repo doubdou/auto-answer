@@ -54,14 +54,14 @@ public class AppCompleteEventMessage extends BaseEventMessage {
                 logger.info("tts合成完成");
                 statusBean.setPlayStatus(ChannelStatusTypeBean.NOT_PLAY);
             }
-            //排除answer，因为对话开始的时候聊天CC_DM_CHAT_CREATE 会发送answer事件
+            //排除answer，因为对话开始的时候聊天AA_DM_CHAT_CREATE 会发送answer事件
             if(application.equals(FsApplicationName.PLAYBACK)||application.equals(FsApplicationName.SPEAK)|| application.equals(FsApplicationName.SLEEP)){
                 if(statusBean.getActionBean()==null||statusBean.getActionBean().size()==0){
                     logger.info("节点执行完成，发送DM 节点执行完成");
                     DialogManageRequest dmRequest=new DialogManageRequest();
                     dmRequest.setChatId(callId);
                     dmRequest.setCallee(callee);
-                    dmRequest.setReqType(DialogRequestEnum.CC_DM_CHAT_ACTION_SUCCESS);
+                    dmRequest.setReqType(DialogRequestEnum.AA_DM_CHAT_ACTION_SUCCESS);
                     DialogManageResponse dmResponse=applicationComponent.getDialogService().dialogManage(dmRequest);
                     DialogData dialogData=parseActions(dmResponse);
                     if(dialogData!=null){

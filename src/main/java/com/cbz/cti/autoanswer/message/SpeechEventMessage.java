@@ -59,7 +59,7 @@ public class SpeechEventMessage extends BaseEventMessage {
                         logger.info("请求DM 获取响应");
                         statusBean.setAsrSpeechNullNum(0);
                         DialogManageRequest manageRequest=new DialogManageRequest();
-                        manageRequest.setReqType(DialogRequestEnum.CC_DM_CHAT_TEXT);
+                        manageRequest.setReqType(DialogRequestEnum.AA_DM_CHAT_TEXT);
                         manageRequest.setCallee(callee);
                         manageRequest.setClientId(caller);
                         manageRequest.setChatId(callId);

@@ -33,7 +33,7 @@ public class AsrNoInputTimeout implements TimerTask {
             //发送DM超时事件
             logger.info("-------------------asr 输入超时-------------------");
             DialogManageRequest dmRequest=new DialogManageRequest();
-            dmRequest.setReqType(DialogRequestEnum.CC_DM_CHAT_TIMEOUT);
+            dmRequest.setReqType(DialogRequestEnum.AA_DM_CHAT_TIMEOUT);
             dmRequest.setChatId(callId);
             DialogManageResponse dmReponse=component.getDialogService().dialogManage(dmRequest);
             DialogData dialogData=baseEventMessage.parseActions(dmReponse);

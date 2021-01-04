@@ -116,7 +116,7 @@ public class DtmfEventMessage extends BaseEventMessage {
     private void requestDm(String dtmf, String callId, boolean isBreak){
         logger.info("-------------------------请求DM响应---------------------------");
         DialogManageRequest dmRequest=new DialogManageRequest();
-        dmRequest.setReqType(DialogRequestEnum.CC_DM_CHAT_DTMF);
+        dmRequest.setReqType(DialogRequestEnum.AA_DM_CHAT_DTMF);
         dmRequest.setChatId(callId);
         dmRequest.setText(dtmf);
         DialogManageResponse manageResponse=applicationComponent.getDialogService().dialogManage(dmRequest);

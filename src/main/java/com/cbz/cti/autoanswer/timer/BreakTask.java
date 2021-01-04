@@ -34,7 +34,7 @@ public class BreakTask implements TimerTask {
         logger.info("说话时间超过1.5s 发送打断操作");
         DialogManageRequest manageRequest=new DialogManageRequest();
         manageRequest.setChatId(callId);
-        manageRequest.setReqType(DialogRequestEnum.CC_DM_CHAT_START);
+        manageRequest.setReqType(DialogRequestEnum.AA_DM_CHAT_START);
         DialogManageResponse manageResponse=component.getDialogService().dialogManage(manageRequest);
         DialogData dialogData=eventMessage.parseActions(manageResponse);
         if(dialogData!=null){

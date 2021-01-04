@@ -99,40 +99,40 @@ public abstract class BaseEventMessage {
             DialogActionBean actionBean=new DialogActionBean();
             actionBean.setAction(action);
             actionBean.setCallId(callId);
-            if(actionTypeEnum.equals(DialogActionTypeEnum.DM_CC_CHAT_ANSWER)){
+            if(actionTypeEnum.equals(DialogActionTypeEnum.DM_AA_CHAT_ANSWER)){
                 logger.info("会话创建完成，启动应答");
                 ccAction = new AnswerAction(applicationConfig,
                         applicationComponent,
                         clientProxy,
                         actionBean,
                         this);
-            }else if(actionTypeEnum.equals(DialogActionTypeEnum.DM_CC_CHAT_REFUSE)){
+            }else if(actionTypeEnum.equals(DialogActionTypeEnum.DM_AA_CHAT_REFUSE)){
                 logger.info("拒接接通，启动挂断操作");
                 ccAction=new HangupAction(applicationConfig,applicationComponent,clientProxy,actionBean,this);
-            }else if(actionTypeEnum.equals(DialogActionTypeEnum.DM_CC_CHAT_PLAY_FILE)){
+            }else if(actionTypeEnum.equals(DialogActionTypeEnum.DM_AA_CHAT_PLAY_FILE)){
                 logger.info("播放文件");
                 //保存对话状态
                 ccAction=new PlayFileAction(dialogData,applicationConfig,applicationComponent,clientProxy,actionBean,this);
-            }else if(actionTypeEnum.equals(DialogActionTypeEnum.DM_CC_CHAT_PLAY_TTS)){
+            }else if(actionTypeEnum.equals(DialogActionTypeEnum.DM_AA_CHAT_PLAY_TTS)){
                 logger.info("调用tts合成");
                 ccAction=new PlayTTSAction(dialogData,applicationConfig,applicationComponent,clientProxy,actionBean,this);
-            }else if(actionTypeEnum.equals(DialogActionTypeEnum.DM_CC_CHAT_HANGUP)){
+            }else if(actionTypeEnum.equals(DialogActionTypeEnum.DM_AA_CHAT_HANGUP)){
                 logger.info("聊天结束，挂断操作");
                 ccAction=new HangupAction(applicationConfig,applicationComponent,clientProxy,actionBean,this);
-            }else if(actionTypeEnum.equals(DialogActionTypeEnum.DM_CC_CHAT_TRANSFER)){
+            }else if(actionTypeEnum.equals(DialogActionTypeEnum.DM_AA_CHAT_TRANSFER)){
                 logger.info("转人工");
                 ccAction=new TransferAction(applicationConfig,applicationComponent,clientProxy,actionBean,this);
-            }else if(actionTypeEnum.equals(DialogActionTypeEnum.DM_CC_CHAT_GET_DTMF)){
+            }else if(actionTypeEnum.equals(DialogActionTypeEnum.DM_AA_CHAT_GET_DTMF)){
                 logger.info("获取dtmf");
                 //获取dtmf操作
                 ccAction=new DtmfAction(applicationConfig,applicationComponent,clientProxy,actionBean,this,true);
-            }else if(actionTypeEnum.equals(DialogActionTypeEnum.DM_CC_CHAT_DETECT_SPEECH)){
+            }else if(actionTypeEnum.equals(DialogActionTypeEnum.DM_AA_CHAT_DETECT_SPEECH)){
                 logger.info("检测输入");
                 ccAction=new DetectSpeechAction(applicationConfig,applicationComponent,clientProxy,actionBean,this,true);
-            }else if(actionTypeEnum.equals(DialogActionTypeEnum.DM_CC_CHAT_WAIT)){
+            }else if(actionTypeEnum.equals(DialogActionTypeEnum.DM_AA_CHAT_WAIT)){
                 logger.info("执行等待操作");
                 ccAction = new SleepAction(applicationConfig,applicationComponent,clientProxy,actionBean,this);
-            }else if(actionTypeEnum.equals(DialogActionTypeEnum.DM_CC_CHAT_PAUSE_PLAY)){
+            }else if(actionTypeEnum.equals(DialogActionTypeEnum.DM_AA_CHAT_PAUSE_PLAY)){
                 logger.info("暂停播放");
                 ccAction=new BreakAction(applicationConfig,applicationComponent,clientProxy,actionBean,this);
             }

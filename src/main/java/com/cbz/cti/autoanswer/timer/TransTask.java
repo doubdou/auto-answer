@@ -32,7 +32,7 @@ public class TransTask implements TimerTask {
     public void run(Timeout timeout) throws Exception {
         //调用转人工失败
         DialogManageRequest dmRequest=new DialogManageRequest();
-        dmRequest.setReqType(DialogRequestEnum.CC_DM_CHAT_ACTION_FAILED);
+        dmRequest.setReqType(DialogRequestEnum.AA_DM_CHAT_ACTION_FAILED);
         dmRequest.setChatId(callId);
         DialogManageResponse dmResponse=applicationComponent.getDialogService().dialogManage(dmRequest);
         DialogData dialogData=eventMessage.parseActions(dmResponse);

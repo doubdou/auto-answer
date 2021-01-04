@@ -44,9 +44,6 @@ public abstract class BaseAction {
 
     public abstract void executeAction();
 
-
-
-
     /**
      * 打断动作检测
      */
@@ -59,12 +56,12 @@ public abstract class BaseAction {
                 DialogActionBean actionBean=new DialogActionBean();
                 actionBean.setAction(action);
                 actionBean.setCallId(statusBean.getCallId());
-                if(action.getAction()==DialogActionTypeEnum.DM_CC_CHAT_GET_DTMF){
+                if(action.getAction()==DialogActionTypeEnum.DM_AA_CHAT_GET_DTMF){
                     //启动dtmf
                     logger.info("检测到需要提前启动dtmf");
                     DtmfAction dtmfAction=new DtmfAction(applicationConfig,applicationComponent,proxy,actionBean,eventMessage,false);
                     dtmfAction.executeAction();
-                }else if(action.getAction()==DialogActionTypeEnum.DM_CC_CHAT_DETECT_SPEECH){
+                }else if(action.getAction()==DialogActionTypeEnum.DM_AA_CHAT_DETECT_SPEECH){
                     //启动detechspeech
                     logger.info("检测到需要提前启动detechspeech");
                     DetectSpeechAction detectSpeechAction=new DetectSpeechAction(applicationConfig,applicationComponent,proxy,actionBean,eventMessage,false);
@@ -74,7 +71,7 @@ public abstract class BaseAction {
         }else if(breakType==ChannelStatusTypeBean.DTMF_BREAK){
             //dtmf打断
             for(DialogAction action:statusBean.getActionBean()){
-                if(action.getAction()== DialogActionTypeEnum.DM_CC_CHAT_GET_DTMF){
+                if(action.getAction()== DialogActionTypeEnum.DM_AA_CHAT_GET_DTMF){
                     DialogActionBean actionBean=new DialogActionBean();
                     actionBean.setAction(action);
                     actionBean.setCallId(statusBean.getCallId());
@@ -88,7 +85,7 @@ public abstract class BaseAction {
             //语音打断
             //dtmf 打断，动作链里面是否有dtmf输入
             for(DialogAction action:statusBean.getActionBean()){
-                if(action.getAction()==DialogActionTypeEnum.DM_CC_CHAT_DETECT_SPEECH){
+                if(action.getAction()==DialogActionTypeEnum.DM_AA_CHAT_DETECT_SPEECH){
                     DialogActionBean actionBean=new DialogActionBean();
                     actionBean.setAction(action);
                     actionBean.setCallId(statusBean.getCallId());

@@ -38,7 +38,7 @@ public class AnswerEventMessage extends BaseEventMessage {
             manageRequest.setChatId(callId);
             manageRequest.setClientId(caller);
             manageRequest.setCallee(callee);
-            manageRequest.setReqType(DialogRequestEnum.CC_DM_CHAT_START);
+            manageRequest.setReqType(DialogRequestEnum.AA_DM_CHAT_START);
             DialogManageResponse manageResponse=applicationComponent.getDialogService().dialogManage(manageRequest);
             DialogData dialogData = parseActions(manageResponse);
             if(dialogData!=null){

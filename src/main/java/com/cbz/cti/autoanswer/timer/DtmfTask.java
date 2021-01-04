@@ -37,7 +37,7 @@ public class DtmfTask implements TimerTask {
 
        //发送DM超时事件
         DialogManageRequest dmRequest=new DialogManageRequest();
-        dmRequest.setReqType(DialogRequestEnum.CC_DM_CHAT_TIMEOUT);
+        dmRequest.setReqType(DialogRequestEnum.AA_DM_CHAT_TIMEOUT);
         dmRequest.setText(dtmf);
         dmRequest.setChatId(callId);
         DialogManageResponse dmReponse=component.getDialogService().dialogManage(dmRequest);

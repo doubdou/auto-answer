@@ -30,7 +30,6 @@ public class HangupEventMessage extends BaseEventMessage {
 
     @Override
     public void handler(EslEvent eslEvent) {
-        //挂断事件//发送mq事件
         String callId=getCallId(eslEvent.getEventHeaders());
         String caller=getCaller(eslEvent.getEventHeaders());
         String callee=getCallee(eslEvent.getEventHeaders());
@@ -44,7 +43,7 @@ public class HangupEventMessage extends BaseEventMessage {
                 //更改状态,未播放状态
                 ChannelStatusManager.getChannelStatus(callId).setSupportBreak(ChannelStatusTypeBean.NOT_BREAK);
                 logger.info("转接挂断 人工客服无响应 myuuid -> {};挂断原因-> {}",myuuid,hangupCause);
-                manageRequest.setReqType(DialogRequestEnum.CC_DM_CHAT_ACTION_FAILED);
+                manageRequest.setReqType(DialogRequestEnum.AA_DM_CHAT_ACTION_FAILED);
                 manageRequest.setChatId(callId);
                 DialogManageResponse dmResp=applicationComponent.getDialogService().dialogManage(manageRequest);
                 DialogData dialogData=parseActions(dmResp);
@@ -59,20 +58,13 @@ public class HangupEventMessage extends BaseEventMessage {
             manageRequest.setChatId(callId);
             manageRequest.setClientId(caller);
             manageRequest.setCallee(callee);
-            manageRequest.setReqType(DialogRequestEnum.CC_DM_CHAT_END);
+            manageRequest.setReqType(DialogRequestEnum.AA_DM_CHAT_END);
             DialogManageResponse dialogManageResponse=applicationComponent.getDialogService().dialogManage(manageRequest);
             DialogData dialogData=parseActions(dialogManageResponse);
             logger.info("--------正常挂机-------");
             logger.info("{}", JSONObject.toJSONString(dialogData));
-            sendMqLastDialog(callId,dialogData);
             //清除缓存
             ChannelStatusManager.clearChannelCache(callId);
         }
     }
-    //发送最后的消息对话
-    private void sendMqLastDialog(String callId, DialogData dialogData) {
-    }
-
-
-
 }
