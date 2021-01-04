@@ -26,7 +26,7 @@ public class PlayStartEventMessage extends BaseEventMessage {
     public void handler(EslEvent eslEvent) {
         //音频播放开始事件
         String callId=getCallId(eslEvent.getEventHeaders());
-        logger.info("------------------------播放开始 callId -> {} --------------------------",callId);
+        logger.info("播放开始 callId:{}",callId);
         ChannelStatusBean statusBean= ChannelStatusManager.getChannelStatus(callId);
         statusBean.setDtmfBreakTag(ChannelStatusTypeBean.DTMF_BREAK_NOT_REQ);
         statusBean.setPlayStatus(ChannelStatusTypeBean.PORCESS_PLAY);
@@ -37,7 +37,7 @@ public class PlayStartEventMessage extends BaseEventMessage {
                 startTime = 0;
             }
         }catch (Exception e){
-            logger.info("error  {}",e.getMessage());
+            logger.info("error:{}",e.getMessage());
         }
     }
 }

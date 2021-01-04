@@ -3,7 +3,10 @@ package com.cbz.cti.autoanswer.cache;
 import com.cbz.cti.autoanswer.bean.ChannelDialogueBean;
 import com.cbz.cti.autoanswer.bean.ChannelStatusBean;
 import com.cbz.cti.autoanswer.bean.DtmfActionDataBean;
+import com.cbz.cti.autoanswer.message.PlayStopEventMessage;
 import io.netty.util.Timeout;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.util.concurrent.ConcurrentHashMap;
 
@@ -14,7 +17,7 @@ import java.util.concurrent.ConcurrentHashMap;
  * @date 2020-10-17 9:58
  */
 public class ChannelStatusManager {
-
+    private static final Logger logger = LoggerFactory.getLogger(ChannelStatusManager.class);
     private static ConcurrentHashMap<String, ChannelStatusBean> channelStatusMap=new ConcurrentHashMap<>(64);
     //对话管理
     private static  ConcurrentHashMap<String, ChannelDialogueBean> channelDialogueMap=new ConcurrentHashMap<>(64);
@@ -32,7 +35,7 @@ public class ChannelStatusManager {
      * 增加
      */
     public static void addAsrTimeout(String callId, Timeout asrNoInputTimeout){
-        cancleAsrTimeout(callId);
+        cancelAsrTimeout(callId);
         asrTimeoutMap.put(callId,asrNoInputTimeout);
     }
 
@@ -40,7 +43,7 @@ public class ChannelStatusManager {
      * 取消超时
      * @param callId
      */
-    public static void cancleAsrTimeout(String callId){
+    public static void cancelAsrTimeout(String callId){
         Timeout timeout=asrTimeoutMap.remove(callId);
         if(timeout!=null&&!timeout.isExpired()){
             timeout.cancel();
@@ -79,7 +82,7 @@ public class ChannelStatusManager {
      * 取消dtmf超时
      * @param callId
      */
-    public static void cancleDtmfTimeout(String callId){
+    public static void cancelDtmfTimeout(String callId){
         Timeout timeout=dtmfTimeoutMap.remove(callId);
         if(timeout!=null){
             //
@@ -167,7 +170,10 @@ public class ChannelStatusManager {
      * @return
      */
     public static ChannelStatusBean getChannelStatus(String callId){
-        return channelStatusMap.get(callId);
+        ChannelStatusBean channelStatusBean = channelStatusMap.get(callId);
+        logger.info("ChannelStatusManager getChannelStatus,callId:{} {}",callId,channelStatusBean.getActionBean().toString());
+//        return channelStatusMap.get(callId);
+        return channelStatusBean;
     }
 
     /**
@@ -181,7 +187,7 @@ public class ChannelStatusManager {
         breakTimoutMap.remove(callId);
         dtmfTimeoutMap.remove(callId);
         dtmfActionMap.remove(callId);
-        cancleAsrTimeout(callId);
+        cancelAsrTimeout(callId);
         asrTimeoutMap.remove(callId);
     }
 }

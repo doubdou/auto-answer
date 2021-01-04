@@ -36,14 +36,7 @@ public class InComingEventMessage extends BaseEventMessage{
             String callee=getCallee(eslEvent.getEventHeaders());
             String caller=getCaller(eslEvent.getEventHeaders());
             String callId=getCallId(eslEvent.getEventHeaders());
-            //保存状态
-            ChannelStatusBean statusBean=new ChannelStatusBean();
-            statusBean.setActionBean(null);
-            statusBean.setPlayStatus(ChannelStatusTypeBean.NOT_PLAY);
-            statusBean.setCurrentApp("");
-            statusBean.setCallId(callId);
-            statusBean.setSupportBreak(ChannelStatusTypeBean.NOT_BREAK);
-            ChannelStatusManager.addChannelStatus(callId,statusBean);
+
             logger.info("主叫-> {};被叫->{};callId->{}",caller,callee,callId);
             DialogManageRequest dialogManageRequest=new DialogManageRequest();
             dialogManageRequest.setReqType(DialogRequestEnum.CC_DM_CHAT_CREATE);
@@ -52,11 +45,21 @@ public class InComingEventMessage extends BaseEventMessage{
             dialogManageRequest.setChatId(callId);
             //应答事件
             DialogManageResponse manageResponse = applicationComponent.getDialogService().dialogManage(dialogManageRequest);
-            DialogData dialogData=parseActions(manageResponse);
-            if(dialogData!=null){
+            DialogData dialogData = parseActions(manageResponse);
+            if(dialogData != null){
+                //保存状态
+                ChannelStatusBean statusBean=new ChannelStatusBean();
+                statusBean.setDialogData(dialogData);
+                statusBean.setActionBean(dialogData.getActions());
+                statusBean.setPlayStatus(ChannelStatusTypeBean.NOT_PLAY);
+                statusBean.setCurrentApp("");
+                statusBean.setCallId(callId);
+                statusBean.setSupportBreak(ChannelStatusTypeBean.NOT_BREAK);
+                ChannelStatusManager.addChannelStatus(callId,statusBean);
+                logger.info("DEBUG InComing Event handler. Get msg-->{}", manageResponse.getMsg());
                 executeActions(dialogData,dialogData.getActions(),callId);
             } else {
-                logger.info("DEBUG dialogData is null.");
+                logger.info("DEBUG InComing dialogData is null.");
             }
         }
     }

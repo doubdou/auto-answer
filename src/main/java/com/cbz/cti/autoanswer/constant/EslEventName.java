@@ -2,7 +2,7 @@ package com.cbz.cti.autoanswer.constant;
 
 /**
  * @author jinzw
- * @date $time$ $date$
+ * @date 2020-04-16 10:36
  */
 public class EslEventName {
     public static final String CHANNEL_CREATE="CHANNEL_CREATE";

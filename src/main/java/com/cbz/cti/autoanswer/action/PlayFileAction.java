@@ -39,7 +39,7 @@ public class PlayFileAction extends BaseAction {
     @Override
     public void executeAction() {
         //取消上一个定时器，有可能存在
-        ChannelStatusManager.cancleAsrTimeout(actionBean.getCallId());
+        ChannelStatusManager.cancelAsrTimeout(actionBean.getCallId());
         DialogPlayFileParams playFileParams = (DialogPlayFileParams) actionBean.getAction().getParams();
         logger.info("播放文件录音->{};contextId->{}",playFileParams.getPath(),actionBean.getCallId());
         //获取状态

@@ -33,7 +33,7 @@ public class AnswerEventMessage extends BaseEventMessage {
             //开始录音
             clientProxy.record(callId,applicationConfig.getRecordPath()+callId+".wav");
 
-            logger.info("---------------开始录音 callId -> {} --------------",callId);
+            logger.info("开始录音 callId:{}",callId);
             DialogManageRequest manageRequest = new DialogManageRequest();
             manageRequest.setChatId(callId);
             manageRequest.setClientId(caller);

@@ -62,7 +62,7 @@
 
         <dependency>
             <groupId>ai.cbz.inbound</groupId>
-            <artifactId>dialogue-mock</artifactId>
+            <artifactId>dialogue-mock-api</artifactId>
             <version>1.0-SNAPSHOT</version>
         </dependency>
 

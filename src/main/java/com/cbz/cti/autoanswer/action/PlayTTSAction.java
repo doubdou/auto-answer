@@ -36,7 +36,7 @@ public class PlayTTSAction extends BaseAction {
     @Override
     public void executeAction() {
         //取消上一个定时器，有可能存在
-        ChannelStatusManager.cancleAsrTimeout(actionBean.getCallId());
+        ChannelStatusManager.cancelAsrTimeout(actionBean.getCallId());
         DialogAction action= actionBean.getAction();
         DialogPlayTTSParams playTTSParam= (DialogPlayTTSParams) action.getParams();
         //判断是否打断，用来开启

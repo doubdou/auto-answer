@@ -89,15 +89,17 @@ public abstract class BaseEventMessage {
         }
         if(actions.size()>0){
             //取出一个动作指令，执行动作，
+            logger.info("actions size-->{}", actions.size());
             DialogAction action=actions.remove(0);
+            logger.info("after remove, actions size-->{}", actions.size());
             //保持其余的指令
             saveNextAction(dialogData,actions,callId);
-            DialogActionTypeEnum actionTypeEnum=action.getAction();
-            BaseAction ccAction=null;
+            DialogActionTypeEnum actionTypeEnum = action.getAction();
+            BaseAction ccAction = null;
             DialogActionBean actionBean=new DialogActionBean();
             actionBean.setAction(action);
             actionBean.setCallId(callId);
-            if(actionTypeEnum.equals(DialogActionTypeEnum.DM_CC_CHAT_CREATE_COMPLETE)){
+            if(actionTypeEnum.equals(DialogActionTypeEnum.DM_CC_CHAT_ANSWER)){
                 logger.info("会话创建完成，启动应答");
                 ccAction = new AnswerAction(applicationConfig,
                         applicationComponent,
@@ -114,7 +116,7 @@ public abstract class BaseEventMessage {
             }else if(actionTypeEnum.equals(DialogActionTypeEnum.DM_CC_CHAT_PLAY_TTS)){
                 logger.info("调用tts合成");
                 ccAction=new PlayTTSAction(dialogData,applicationConfig,applicationComponent,clientProxy,actionBean,this);
-            }else if(actionTypeEnum.equals(DialogActionTypeEnum.DM_CC_CHAT_END)){
+            }else if(actionTypeEnum.equals(DialogActionTypeEnum.DM_CC_CHAT_HANGUP)){
                 logger.info("聊天结束，挂断操作");
                 ccAction=new HangupAction(applicationConfig,applicationComponent,clientProxy,actionBean,this);
             }else if(actionTypeEnum.equals(DialogActionTypeEnum.DM_CC_CHAT_TRANSFER)){
@@ -127,8 +129,9 @@ public abstract class BaseEventMessage {
             }else if(actionTypeEnum.equals(DialogActionTypeEnum.DM_CC_CHAT_DETECT_SPEECH)){
                 logger.info("检测输入");
                 ccAction=new DetectSpeechAction(applicationConfig,applicationComponent,clientProxy,actionBean,this,true);
-            }else if(actionTypeEnum.equals(DialogActionTypeEnum.DM_CC_CHAT_NONE)){
-                logger.info("不执行任何操作");
+            }else if(actionTypeEnum.equals(DialogActionTypeEnum.DM_CC_CHAT_WAIT)){
+                logger.info("执行等待操作");
+                ccAction = new SleepAction(applicationConfig,applicationComponent,clientProxy,actionBean,this);
             }else if(actionTypeEnum.equals(DialogActionTypeEnum.DM_CC_CHAT_PAUSE_PLAY)){
                 logger.info("暂停播放");
                 ccAction=new BreakAction(applicationConfig,applicationComponent,clientProxy,actionBean,this);
@@ -136,6 +139,7 @@ public abstract class BaseEventMessage {
             if(ccAction!=null){
                 ccAction.executeAction();
             }
+            logger.debug("ccAction execute done... actions size:{}", actions.size());
         }
     }
 
@@ -149,9 +153,14 @@ public abstract class BaseEventMessage {
     private void saveNextAction(DialogData dialogData, List<DialogAction> actions, String callId){
         ChannelStatusBean statusBean= ChannelStatusManager.getChannelStatus(callId);
         if(statusBean!=null){
+            logger.info("saveNextAction: statusBean not null...");
             statusBean.setDialogData(dialogData);
             statusBean.setActionBean(actions);
+        }else {
+            logger.info("statusBean is null.");
         }
+
+        logger.debug(statusBean.getCurrentApp());
     }
     /**
      * 解析动作
@@ -160,7 +169,7 @@ public abstract class BaseEventMessage {
     public DialogData parseActions(DialogManageResponse manageResponse){
         int status=manageResponse.getStatus();
         logger.info("服务器端响应码 -> {};时间->{};文本描述->{}",status,manageResponse.getRespTime(),manageResponse.getMsg());
-        if(status==1000){
+        if(status==200){
             //服务器端执行成功
             DialogData dialogData=manageResponse.getData();
             return dialogData;

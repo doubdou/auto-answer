@@ -28,4 +28,6 @@ public class FsApplicationName {
     public static String STOP_RECORD_SESSION="stop_record_session";
 
     public static String ORIGINATE="originate";
+
+    public static String SLEEP="sleep";
 }

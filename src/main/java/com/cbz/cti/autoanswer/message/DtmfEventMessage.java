@@ -66,7 +66,7 @@ public class DtmfEventMessage extends BaseEventMessage {
                             //
                             logger.info("接收到dtmf结束标识  -> {}",dtmfDigit);
                             //取消超时
-                            ChannelStatusManager.cancleDtmfTimeout(callId);
+                            ChannelStatusManager.cancelDtmfTimeout(callId);
                             //设置此时接受状态
                             ChannelStatusManager.getChannelStatus(callId).setInputType(ChannelStatusTypeBean.FPRBID_INPUT);
                             //发送消息到消息记录;
@@ -83,7 +83,7 @@ public class DtmfEventMessage extends BaseEventMessage {
                         if(actionDataBean.getCurrDtmf().length()==actionDataBean.getDtmfLength()){
                             logger.info("获取dtmf长度等于设定的长度，开始请求Ai");
                             //取消超时
-                            ChannelStatusManager.cancleDtmfTimeout(callId);
+                            ChannelStatusManager.cancelDtmfTimeout(callId);
                             //设置此时接受状态
                             ChannelStatusManager.getChannelStatus(callId).setInputType(ChannelStatusTypeBean.FPRBID_INPUT);
                             //发送消息到消息记录;

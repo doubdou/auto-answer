@@ -121,7 +121,9 @@ public class ClientProxy {
         return fsClient.sendCommandApi(callId,"execute",FsApplicationName.STOP_RECORD_SESSION,path);
     }
 
-
+    public CommandResponse sendSleepCommand(String callId, String timeout){
+        return fsClient.sendCommandApi(callId,"execute",FsApplicationName.SLEEP,timeout);
+    }
 
     public void reconnect() throws InboundConnectionFailure {
         fsClient.connect();
